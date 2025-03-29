@@ -34,20 +34,63 @@
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
 
+# Инициализация переменных
+balance = 0  # Баланс счета
+purchase_history = []  # История покупок
+
 while True:
-    print('1. пополнение счета')
+    # Вывод меню
+    print('\n1. пополнение счета')
     print('2. покупка')
     print('3. история покупок')
     print('4. выход')
 
-    choice = input('Выберите пункт меню')
+    # Выбор пункта меню
+    choice = input('Выберите пункт меню: ')
+
     if choice == '1':
-        pass
+        # Пополнение счета
+        try:
+            amount = float(input('Введите сумму для пополнения счета: '))
+            if amount > 0:
+                balance += amount
+                print(f'Счет успешно пополнен на {amount}. Текущий баланс: {balance}')
+            else:
+                print('Сумма должна быть положительной.')
+        except ValueError:
+            print('Ошибка ввода. Введите корректное число.')
+
     elif choice == '2':
-        pass
+        # Покупка
+        try:
+            purchase_amount = float(input('Введите сумму покупки: '))
+            if purchase_amount > balance:
+                print('Недостаточно средств на счете.')
+            elif purchase_amount <= 0:
+                print('Сумма покупки должна быть положительной.')
+            else:
+                purchase_name = input('Введите название покупки: ')
+                balance -= purchase_amount
+                purchase_history.append((purchase_name, purchase_amount))
+                print(f'Покупка "{purchase_name}" на сумму {purchase_amount} успешно совершена.')
+                print(f'Текущий баланс: {balance}')
+        except ValueError:
+            print('Ошибка ввода. Введите корректное число.')
+
     elif choice == '3':
-        pass
+        # История покупок
+        if not purchase_history:
+            print('История покупок пуста.')
+        else:
+            print('История покупок:')
+            for item in purchase_history:
+                print(f'{item[0]} - {item[1]}')
+
     elif choice == '4':
+        # Выход из программы
+        print('Выход из программы.')
         break
+
     else:
-        print('Неверный пункт меню')
+        # Обработка неверного выбора
+        print('Неверный пункт меню.')
